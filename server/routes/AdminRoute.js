@@ -4,6 +4,10 @@ import {
   addEmployee,
   adminLogin,
   category,
+  deleteEmployee,
+  editEmployee,
+  employee,
+  updateEmployee,
 } from "../controllers/AdminController.js";
 import multer from "multer";
 import path from "path";
@@ -29,4 +33,9 @@ router.post("/adminLogin", adminLogin);
 router.post("/addCategory", addCategory);
 router.get("/category", category);
 router.post("/addEmployee", upload.single("image"), addEmployee);
+router.get("/employee", employee);
+router.get("/editEmployee/:id", editEmployee);
+router.put("/updateEmployee/:id", updateEmployee);
+router.delete("/deleteEmployee/:id", deleteEmployee);
+
 export { router as adminRouter };

@@ -50,20 +50,19 @@ export const adminLogin = (req, res) => {
     }
   });
 };
+export const addCategory = (req, res) => {
+  const sql = "INSERT INTO category (`name`) VALUES (?)";
+  connection.query(sql, [req.body.category], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true });
+  });
+};
 
 export const category = (req, res) => {
   const sql = "SELECT * FROM category";
   connection.query(sql, (err, result) => {
     if (err) return res.json({ Status: false, Error: "Query Error" });
     return res.json({ Status: true, Result: result });
-  });
-};
-
-export const addCategory = (req, res) => {
-  const sql = "INSERT INTO category (`name`) VALUES (?)";
-  connection.query(sql, [req.body.category], (err, result) => {
-    if (err) return res.json({ Status: false, Error: "Query Error" });
-    return res.json({ Status: true });
   });
 };
 
@@ -88,7 +87,7 @@ export const addEmployee = (req, res) => {
       req.body.address,
       req.body.salary,
       req.body.category_id,
-      req.file.filename, 
+      req.file.filename,
     ];
 
     connection.query(sql, [values], (err, result) => {
@@ -101,5 +100,49 @@ export const addEmployee = (req, res) => {
       }
       return res.json({ Status: true });
     });
+  });
+};
+
+export const employee = (req, res) => {
+  const sql = "SELECT * FROM employee";
+  connection.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const editEmployee = (req, res) => {
+  const id = req.params.id;
+  // console.log(id);
+  const sql = "SELECT * FROM employee WHERE id = ? ";
+  connection.query(sql, [id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const updateEmployee = (req, res) => {
+  const id = req.params.id;
+  // console.log(id);
+  const sql = `UPDATE employee SET name= ?, email= ?, salary= ?, address= ?, category_id= ? WHERE id= ?`;
+  const values = [
+    req.body.name,
+    req.body.email,
+    req.body.salary,
+    req.body.address,
+    req.body.category_id,
+  ];
+  connection.query(sql, [...values, id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" + err });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const deleteEmployee = (req, res) => {
+  const id = req.params.id;
+  const sql = `DELETE from employee WHERE id = ?`;
+  connection.query(sql, [id], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" + err });
+    return res.json({ Status: true, Result: result });
   });
 };
