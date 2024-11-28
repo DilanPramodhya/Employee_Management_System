@@ -66,3 +66,40 @@ export const addCategory = (req, res) => {
     return res.json({ Status: true });
   });
 };
+
+export const addEmployee = (req, res) => {
+  if (!req.file) {
+    return res.json({ Status: false, Error: "File upload failed" });
+  }
+
+  const sql =
+    "INSERT INTO employee (name, email, password, address, salary, category_id, image) VALUES (?)";
+
+  bcrypt.hash(req.body.password, 10, (err, hash) => {
+    if (err) {
+      console.error("Hashing Error: ", err);
+      return res.json({ Status: false, Error: "Hashing Error" });
+    }
+
+    const values = [
+      req.body.name,
+      req.body.email,
+      hash,
+      req.body.address,
+      req.body.salary,
+      req.body.category_id,
+      req.file.filename, 
+    ];
+
+    connection.query(sql, [values], (err, result) => {
+      if (err) {
+        console.error("SQL Error: ", err);
+        return res.json({
+          Status: false,
+          Error: "Query Error: " + err.message,
+        });
+      }
+      return res.json({ Status: true });
+    });
+  });
+};
