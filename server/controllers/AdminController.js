@@ -50,3 +50,19 @@ export const adminLogin = (req, res) => {
     }
   });
 };
+
+export const category = (req, res) => {
+  const sql = "SELECT * FROM category";
+  connection.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const addCategory = (req, res) => {
+  const sql = "INSERT INTO category (`name`) VALUES (?)";
+  connection.query(sql, [req.body.category], (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true });
+  });
+};
