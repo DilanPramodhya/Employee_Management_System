@@ -9,7 +9,8 @@ export const Dashboard = () => {
   const handleLogout = () => {
     axios.get("http://localhost:3000/auth/logout").then((result) => {
       if (result.data.Status) {
-        navigateTo("/adminLogin");
+        localStorage.removeItem("valid");
+        navigateTo("/");
       }
     });
   };

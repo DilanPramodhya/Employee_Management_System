@@ -18,6 +18,29 @@ const Category = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this Category?"
+    );
+
+    if (confirmDelete) {
+      axios
+        .delete(`http://localhost:3000/auth/deleteCategory/` + id)
+        .then((result) => {
+          if (result.data.Status) {
+            toast.success("Category Deleted Successfully!");
+            window.location.reload();
+          } else {
+            toast.error(result.data.Error || "Failed to delete category.");
+          }
+        })
+        .catch((err) => {
+          console.error("Error deleting category:", err);
+          toast.error("An error occurred while deleting the category.");
+        });
+    }
+  };
   return (
     <div
       style={{
@@ -93,6 +116,16 @@ const Category = () => {
               >
                 Name
               </th>
+              <th
+                style={{
+                  padding: "8px",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
+              >
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -118,6 +151,34 @@ const Category = () => {
                   }}
                 >
                   {element.name}
+                </td>
+                <td>
+                  <button
+                    style={{
+                      padding: "8px 16px",
+                      backgroundColor: "#dc3545",
+                      color: "#ffffff",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      boxShadow: "0px 4px 8px rgba(220, 53, 69, 0.2)",
+                      transition:
+                        "background-color 0.3s ease, transform 0.2s ease",
+                    }}
+                    onMouseOver={(e) => {
+                      e.target.style.backgroundColor = "#a71d2a";
+                      e.target.style.transform = "scale(1.05)";
+                    }}
+                    onMouseOut={(e) => {
+                      e.target.style.backgroundColor = "#dc3545";
+                      e.target.style.transform = "scale(1)";
+                    }}
+                    onClick={() => handleDelete(element.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

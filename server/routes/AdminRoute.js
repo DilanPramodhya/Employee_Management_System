@@ -7,6 +7,7 @@ import {
   adminLogout,
   adminRecords,
   category,
+  deleteCategory,
   deleteEmployee,
   editEmployee,
   employee,
@@ -42,6 +43,7 @@ router.get("/employee", employee);
 router.get("/editEmployee/:id", editEmployee);
 router.put("/updateEmployee/:id", updateEmployee);
 router.delete("/deleteEmployee/:id", deleteEmployee);
+router.delete("/deleteCategory/:id", deleteCategory);
 router.get('/adminCount', adminCount)
 router.get('/employeeCount', employeeCount)
 router.get('/salaryCount', salaryCount)

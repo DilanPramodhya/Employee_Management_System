@@ -147,6 +147,25 @@ export const deleteEmployee = (req, res) => {
   });
 };
 
+export const deleteCategory = (req, res) => {
+  const id = req.params.id;
+  const sql = `DELETE FROM category WHERE id = ?`;
+
+  connection.query(sql, [id], (err, result) => {
+    if (err) {
+      if (err.code === "ER_ROW_IS_REFERENCED_2") {
+        return res.json({
+          Status: false,
+          Error:
+            "Cannot delete this category as it is referenced by other records.",
+        });
+      }
+      return res.json({ Status: false, Error: "Query Error: " + err.message });
+    }
+
+    return res.json({ Status: true, Result: result });
+  });
+};
 export const adminCount = (req, res) => {
   const sql = "SELECT count(id) as admin FROM admin";
   connection.query(sql, (err, result) => {

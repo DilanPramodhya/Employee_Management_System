@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const AdminLogin = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -17,12 +17,12 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post("http://localhost:3000/auth/adminlogin", values)
+      .post("http://localhost:3000/auth/adminLogin", values)
       .then((result) => {
         if (result.data.loginStatus) {
           // console.log(result);
           localStorage.setItem("valid", true);
-          toast.success("Login Success");
+          toast.success("Admin Login Success");
           navigate("/dashboard");
         } else {
           // console.log(error);
@@ -37,7 +37,15 @@ const Login = () => {
     <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
       <div className="p-3 rounded w-25 border loginForm">
         {/* <div className="text-danger">{error && error}</div> */}
-        <h2>Login Page</h2>
+        <h2
+          style={{
+            textAlign: "center", 
+            marginTop: "10px", 
+          }}
+        >
+          Admin Login Page
+        </h2>
+
         <form className="container py-4" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
@@ -100,4 +108,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;
