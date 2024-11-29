@@ -146,3 +146,40 @@ export const deleteEmployee = (req, res) => {
     return res.json({ Status: true, Result: result });
   });
 };
+
+export const adminCount = (req, res) => {
+  const sql = "SELECT count(id) as admin FROM admin";
+  connection.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const employeeCount = (req, res) => {
+  const sql = "SELECT count(id) as employee FROM employee";
+  connection.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const salaryCount = (req, res) => {
+  const sql = "SELECT sum(salary) as salaryOfEmp FROM employee";
+  connection.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const adminRecords = (req, res) => {
+  const sql = "SELECT * FROM admin";
+  connection.query(sql, (err, result) => {
+    if (err) return res.json({ Status: false, Error: "Query Error" });
+    return res.json({ Status: true, Result: result });
+  });
+};
+
+export const adminLogout = (req, res) => {
+  res.clearCookie("token");
+  return res.json({ Status: true });
+};

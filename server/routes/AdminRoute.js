@@ -2,11 +2,16 @@ import express from "express";
 import {
   addCategory,
   addEmployee,
+  adminCount,
   adminLogin,
+  adminLogout,
+  adminRecords,
   category,
   deleteEmployee,
   editEmployee,
   employee,
+  employeeCount,
+  salaryCount,
   updateEmployee,
 } from "../controllers/AdminController.js";
 import multer from "multer";
@@ -37,5 +42,10 @@ router.get("/employee", employee);
 router.get("/editEmployee/:id", editEmployee);
 router.put("/updateEmployee/:id", updateEmployee);
 router.delete("/deleteEmployee/:id", deleteEmployee);
+router.get('/adminCount', adminCount)
+router.get('/employeeCount', employeeCount)
+router.get('/salaryCount', salaryCount)
+router.get('/adminRecords', adminRecords)
+router.get('/logout', adminLogout)
 
 export { router as adminRouter };
